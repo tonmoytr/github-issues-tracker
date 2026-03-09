@@ -3,9 +3,6 @@ const searchInput = document.getElementById("search");
 const searchBtn = document.getElementById("btn-search");
 const issueCountText = document.getElementById("issue-count");
 
-// let allIssues = [];
-
-// 1. Fetch Data
 const allIssuesUrl = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
 
 async function fetchIssues() {
@@ -18,14 +15,22 @@ async function fetchIssues() {
 
 function renderIssues(issues) {
   issueCountText.textContent = `${issues.length} Issues`;
+
   issuesContainer.innerHTML = "";
-  issues.forEach = (issue) => {
+  issues.forEach((issue) => {
+    const statusImg =
+      issue.status === "open"
+        ? "./assets/Open-Status.png"
+        : "./assets/Closed-Status.png";
+    const borderColor =
+      issue.status === "open" ? "border-green-600" : "border-purple-600";
+
     issuesContainer.innerHTML += `
-        <div class="border border-green-600 rounded-lg p-5">
+        <div class="border border-t-4 ${borderColor} rounded-lg p-5 bg-white">
           <figure class="flex justify-between items-center mb-5">
             <img
-              src="./assets/Open-Status.png"
-              alt="open status"
+              src="${statusImg}"
+              alt="${issue.status} status"
               class="w-8 h-8"
             />
             <p class="bg-red-200 text-red-600 rounded-full px-8 py-1">${issue.priority}</p>
@@ -35,10 +40,10 @@ function renderIssues(issues) {
             ${issue.description}
           </p>
           <div class="flex items-center justify-start gap-5 my-4">
-            <p class="bg-red-200 text-red-600 rounded-full px-8 py-1">
+            <p class="bg-red-200 text-red-600 text-sm rounded-full px-2 py-1">
               ${issue.labels[0]}
             </p>
-            <p class="bg-amber-200 text-amber-600 rounded-full px-8 py-1">
+            <p class="bg-amber-200 text-amber-600 text-sm rounded-full px-2 py-1">
               ${issue.labels[1]}
             </p>
           </div>
@@ -46,7 +51,7 @@ function renderIssues(issues) {
           <p class="text-sm text-gray-600 pb-1">#${issue.id} by ${issue.author}</p>
           <p class="text-sm text-gray-600">${issue.date}</p>
         </div>`;
-  };
+  });
 }
 
 // Initial Load
