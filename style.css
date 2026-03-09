@@ -1,0 +1,15 @@
+/* Custom Purple for Active Tab */
+.tab.tab-active {
+  background-color: #4f11ff !important;
+  color: white !important;
+}
+
+/* Ensure tabs look like buttons */
+.tab {
+  border: 1px solid transparent;
+}
+
+.tab:not(.tab-active):hover {
+  background-color: #f8fafc;
+  border-color: #e2e8f0;
+}

@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TR Github Issues Tracker</title>
+    <link
+      rel="shortcut icon"
+      href="./assets/github-logo.png"
+      type="image/x-icon"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <header>
+      <div class="navbar bg-base-100 shadow-sm px-20">
+        <div class="flex-1">
+          <a class="btn btn-ghost text-xl">daisyUI</a>
+        </div>
+        <div class="flex gap-2">
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+            >
+              <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+            </div>
+
+            <input
+              type="text"
+              id="search"
+              class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-github-purple focus:border-github-purple sm:text-sm"
+              placeholder="Search or jump to..."
+            />
+          </div>
+          <button
+            class="ms-2 me-6 bg-blue-600 text-white font-md text-lg px-4 py-1 rounded hover:bg-blue-700"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="bg-slate-100 min-h-screen p-10">
+      <div
+        role="tablist"
+        class="tabs tabs-boxed bg-white border border-gray-200 p-2 gap-2 max-w-fit mx-auto lg:mx-0"
+      >
+        <button
+          role="tab"
+          id="all"
+          data-status="all"
+          class="tab tab-active h-10 px-6 font-medium transition-all rounded-md"
+        >
+          All
+        </button>
+
+        <button
+          role="tab"
+          id="open"
+          data-status="open"
+          class="tab h-10 px-6 font-medium transition-all rounded-md"
+        >
+          Open
+        </button>
+
+        <button
+          role="tab"
+          id="closed"
+          data-status="closed"
+          class="tab h-10 px-6 font-medium transition-all rounded-md"
+        >
+          Closed
+        </button>
+      </div>
+
+      <div
+        id="issue-grid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8"
+      ></div>
+      <section
+        class="bg-white container mx-auto mt-8 p-6 rounded-t-lg shadow-sm border-gray-200 flex justify-between items-center"
+      >
+        <div class="flex gap-5 items-center justify-center">
+          <img
+            src="./assets/Aperture.png"
+            alt="aperture logo"
+            class="w-10 h-10"
+          />
+          <div>
+            <h3 class="text-2xl font-semibold">50 Issues</h3>
+            <p>Track and manage your project Issues</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="h-3 w-3 bg-green-600 rounded-full"></span>
+            <span class="text-slate-700 font-medium text-sm">Open</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="h-3 w-3 bg-purple-600 rounded-full"></span>
+            <span class="text-slate-700 font-medium text-sm">Closed</span>
+          </div>
+        </div>
+      </section>
+      <section
+        id="issues-container"
+        class="bg-slate-5550 container mx-auto mt-1 p-6 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4"
+      >
+        <div class="border border-green-600 rounded-lg p-5">
+          <figure class="flex justify-between items-center mb-5">
+            <img
+              src="./assets/Open-Status.png"
+              alt="open status"
+              class="w-8 h-8"
+            />
+            <p class="bg-red-200 text-red-600 rounded-full px-8 py-1">HIGH</p>
+          </figure>
+          <h5 class="font-semibold text-xl pb-1">Fix Navigation</h5>
+          <p class="text-sm text-gray-600 py-2">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+          </p>
+          <div class="flex items-center justify-start gap-5 my-4">
+            <p class="bg-red-200 text-red-600 rounded-full px-8 py-1">
+              <i class="fa-solid fa-bug"></i> Bug
+            </p>
+            <p class="bg-amber-200 text-amber-600 rounded-full px-8 py-1">
+              <i class="fa-brands fa-hire-a-helper"></i> Help
+            </p>
+          </div>
+          <hr class="w-full my-8 text-slate-400" />
+          <p class="text-sm text-gray-600 pb-1">#1 by doe_john</p>
+          <p class="text-sm text-gray-600">11/11/2026</p>
+        </div>
+      </section>
+    </main>
+    <!-- Scripts -->
+    <script src="./scripts/issues.js"></script>
+  </body>
+</html>
