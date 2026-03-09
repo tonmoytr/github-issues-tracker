@@ -47,6 +47,7 @@
             />
           </div>
           <button
+            id="btn-search"
             class="ms-2 me-6 bg-blue-600 text-white font-md text-lg px-4 py-1 rounded hover:bg-blue-700"
           >
             Search
@@ -55,37 +56,30 @@
       </div>
     </header>
     <main class="bg-slate-100 min-h-screen p-10">
-      <div
-        role="tablist"
-        class="tabs tabs-boxed bg-white border border-gray-200 p-2 gap-2 max-w-fit mx-auto lg:mx-0"
+      <section
+        class="bg-white container mx-auto p-6 rounded-lg shadow-sm border border-gray-200 flex gap-3"
       >
         <button
-          role="tab"
           id="all"
-          data-status="all"
-          class="tab tab-active h-10 px-6 font-medium transition-all rounded-md"
+          class="bg-[#4F11FF] text-white px-10 py-2 rounded-md font-medium text-sm transition-colors"
         >
           All
         </button>
 
         <button
-          role="tab"
           id="open"
-          data-status="open"
-          class="tab h-10 px-6 font-medium transition-all rounded-md"
+          class="bg-white text-slate-600 border border-gray-200 px-10 py-2 rounded-md font-medium text-sm hover:bg-gray-50 transition-colors"
         >
           Open
         </button>
 
         <button
-          role="tab"
           id="closed"
-          data-status="closed"
-          class="tab h-10 px-6 font-medium transition-all rounded-md"
+          class="bg-white text-slate-600 border border-gray-200 px-10 py-2 rounded-md font-medium text-sm hover:bg-gray-50 transition-colors"
         >
           Closed
         </button>
-      </div>
+      </section>
 
       <div
         id="issue-grid"
@@ -101,7 +95,7 @@
             class="w-10 h-10"
           />
           <div>
-            <h3 class="text-2xl font-semibold">50 Issues</h3>
+            <h3 id="issue-count" class="text-2xl font-semibold"></h3>
             <p>Track and manage your project Issues</p>
           </div>
         </div>
@@ -121,34 +115,11 @@
         id="issues-container"
         class="bg-slate-5550 container mx-auto mt-1 p-6 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4"
       >
-        <div class="border border-green-600 rounded-lg p-5">
-          <figure class="flex justify-between items-center mb-5">
-            <img
-              src="./assets/Open-Status.png"
-              alt="open status"
-              class="w-8 h-8"
-            />
-            <p class="bg-red-200 text-red-600 rounded-full px-8 py-1">HIGH</p>
-          </figure>
-          <h5 class="font-semibold text-xl pb-1">Fix Navigation</h5>
-          <p class="text-sm text-gray-600 py-2">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          </p>
-          <div class="flex items-center justify-start gap-5 my-4">
-            <p class="bg-red-200 text-red-600 rounded-full px-8 py-1">
-              <i class="fa-solid fa-bug"></i> Bug
-            </p>
-            <p class="bg-amber-200 text-amber-600 rounded-full px-8 py-1">
-              <i class="fa-brands fa-hire-a-helper"></i> Help
-            </p>
-          </div>
-          <hr class="w-full my-8 text-slate-400" />
-          <p class="text-sm text-gray-600 pb-1">#1 by doe_john</p>
-          <p class="text-sm text-gray-600">11/11/2026</p>
-        </div>
+        
       </section>
     </main>
     <!-- Scripts -->
     <script src="./scripts/issues.js"></script>
+    <script src="./scripts/tabs.js"></script>
   </body>
 </html>

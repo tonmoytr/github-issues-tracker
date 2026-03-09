@@ -1,16 +1,34 @@
-function switchTab(clickedElement, status) {
-  // 1. Remove 'tab-active' and text-white from all tabs
-  const allTabs = document.querySelectorAll(".tab");
-  allTabs.forEach((tab) => {
-    tab.classList.remove("tab-active");
-    tab.classList.add("text-slate-500"); // Reset inactive color
+const tabBtns = {
+  all: document.getElementById("all"),
+  open: document.getElementById("open"),
+  closed: document.getElementById("closed"),
+};
+
+function setActiveTab(activeKey) {
+  Object.keys(tabBtns).forEach((key) => {
+    if (key === activeKey) {
+      tabBtns[key].classList.add("bg-[#4F11FF]", "text-white");
+      tabBtns[key].classList.remove("bg-white", "text-slate-600");
+    } else {
+      tabBtns[key].classList.remove("bg-[#4F11FF]", "text-white");
+      tabBtns[key].classList.add("bg-white", "text-slate-600");
+    }
   });
-
-  // 2. Add 'tab-active' to the clicked tab
-  clickedElement.classList.add("tab-active");
-  clickedElement.classList.remove("text-slate-500");
-
-  // 3. Trigger your Fetch/Filter function
-  console.log(`Now loading: ${status}`);
-  // loadData(status);
 }
+
+tabBtns.all.addEventListener("click", () => {
+  setActiveTab("all");
+  renderIssues(allIssues);
+});
+
+tabBtns.open.addEventListener("click", () => {
+  setActiveTab("open");
+  const filtered = allIssues.filter((i) => i.status === "open");
+  renderIssues(filtered);
+});
+
+tabBtns.closed.addEventListener("click", () => {
+  setActiveTab("closed");
+  const filtered = allIssues.filter((i) => i.status === "closed");
+  renderIssues(filtered);
+});
