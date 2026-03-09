@@ -3,27 +3,7 @@ const searchInput = document.getElementById("search");
 const searchBtn = document.getElementById("btn-search");
 const issueCountText = document.getElementById("issue-count");
 
-// Global variable so tabs.js can access it
 let allIssues = [];
-
-// async function fetchIssues(query = "") {
-//   issuesContainer.innerHTML =
-//     '<div class="col-span-full text-center py-10"><span class="loading loading-spinner loading-lg text-primary"></span></div>';
-
-//   const url = query
-//     ? `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${query}`
-//     : `https://phi-lab-server.vercel.app/api/v1/lab/issues`;
-
-//   try {
-//     const res = await fetch(url);
-//     const data = await res.json();
-//     allIssues = data.data;
-//     renderIssues(allIssues);
-//   } catch (error) {
-//     issuesContainer.innerHTML =
-//       '<p class="col-span-full text-center text-red-500">Error loading issues.</p>';
-//   }
-// }
 
 async function fetchIssues() {
   const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
@@ -44,7 +24,6 @@ function renderIssues(issues) {
       issue.status === "open"
         ? "./assets/Open-Status.png"
         : "./assets/Closed-Status.png";
-    // Requirement: Green border for open, purple for closed
     const borderColor =
       issue.status === "open" ? "border-green-600" : "border-purple-600";
 
@@ -64,6 +43,63 @@ function renderIssues(issues) {
           <p class="text-xs text-gray-400">${new Date(issue.createdAt).toLocaleDateString()}</p>
         </div>`;
   });
+}
+
+async function showDetails(id) {
+  // 1. Fetch the single issue data
+  const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  const issue = data.data;
+
+  // 2. Create the modal container if it doesn't exist in the HTML
+  let modalContainer = document.getElementById("modal-container");
+  if (!modalContainer) {
+    modalContainer = document.createElement("div");
+    modalContainer.id = "modal-container";
+    document.body.appendChild(modalContainer);
+  }
+
+  // 3. Inject the DaisyUI modal structure
+  modalContainer.innerHTML = `
+    <dialog id="issue_details_modal" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box max-w-2xl border-t-8 ${issue.status === "open" ? "border-green-600" : "border-purple-600"}">
+        <div class="flex justify-between items-start mb-4">
+          <h3 class="font-bold text-2xl">${issue.title}</h3>
+          <span class="badge ${issue.status === "open" ? "badge-success" : "badge-secondary"} uppercase font-bold text-white px-4 py-3">
+            ${issue.status}
+          </span>
+        </div>
+        
+        <div class="space-y-4">
+          <p class="text-gray-700 leading-relaxed"><span class="font-bold text-black">Description:</span> ${issue.description}</p>
+          
+          <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-lg text-sm">
+            <p><strong>Author:</strong> ${issue.author}</p>
+            <p><strong>Priority:</strong> ${issue.priority}</p>
+            <p><strong>ID:</strong> #${issue.id}</p>
+            <p><strong>Created:</strong> ${new Date(issue.createdAt).toLocaleString()}</p>
+          </div>
+
+          <div>
+             <p class="font-bold mb-2">Labels:</p>
+             <div class="flex gap-2">
+                ${issue.labels.map((label) => `<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">${label}</span>`).join("")}
+             </div>
+          </div>
+        </div>
+
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-neutral px-8">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+  `;
+
+  // 4. Open the modal
+  document.getElementById("issue_details_modal").showModal();
 }
 
 // Search Implementation

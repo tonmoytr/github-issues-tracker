@@ -7,10 +7,10 @@ const tabBtns = {
 function setActiveTab(activeKey) {
   Object.keys(tabBtns).forEach((key) => {
     if (key === activeKey) {
-      tabBtns[key].classList.add("bg-[#4F11FF]", "text-white");
+      tabBtns[key].classList.add("bg-purple-600", "text-white");
       tabBtns[key].classList.remove("bg-white", "text-slate-600");
     } else {
-      tabBtns[key].classList.remove("bg-[#4F11FF]", "text-white");
+      tabBtns[key].classList.remove("bg-purple-600", "text-white");
       tabBtns[key].classList.add("bg-white", "text-slate-600");
     }
   });
