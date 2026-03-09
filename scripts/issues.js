@@ -52,6 +52,13 @@ async function showDetails(id) {
   const data = await res.json();
   const issue = data.data;
 
+  const priorityBadge =
+    issue.priority === "high"
+      ? "bg-red-600"
+      : issue.priority === "medium"
+        ? "bg-yellow-300"
+        : "bg-green-400";
+
   // 2. Create the modal container if it doesn't exist in the HTML
   let modalContainer = document.getElementById("modal-container");
   if (!modalContainer) {
@@ -64,21 +71,28 @@ async function showDetails(id) {
   modalContainer.innerHTML = `
     <dialog id="issue_details_modal" class="modal modal-bottom sm:modal-middle">
       <div class="modal-box max-w-2xl border-t-8 ${issue.status === "open" ? "border-green-600" : "border-purple-600"}">
-        <div class="flex justify-between items-start mb-4">
-          <h3 class="font-bold text-2xl">${issue.title}</h3>
-          <span class="badge ${issue.status === "open" ? "badge-success" : "badge-secondary"} uppercase font-bold text-white px-4 py-3">
+        <div class=" mb-4">
+          <h3 class="font-bold text-2xl mb-3">${issue.title}</h3>
+          <span class="badge ${issue.status === "open" ? "bg-green-600" : "bg-purple-600"} uppercase font-bold text-white px-4 py-3">
             ${issue.status}
-          </span>
+          </span> 
+          <span class="w-4 h-4 bg-gray-500 rounded-full mx-2" ></span>
+          <span> ${issue.status === "open" ? "Open by" : "Closed by"} ${issue.author} </span>
+          <span class="w-4 h-4 bg-gray-500 rounded-full mx-2" ></span>
+       
         </div>
+        <div class="flex flex-wrap items-center justify-start gap-2 my-4">
+            ${issue.labels.map((label) => `<span class="bg-blue-50 text-blue-600 text-xs px-3 py-1 rounded-full border border-blue-100">${label}</span>`).join("")}
+          </div>
         
         <div class="space-y-4">
           <p class="text-gray-700 leading-relaxed"><span class="font-bold text-black">Description:</span> ${issue.description}</p>
           
           <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-lg text-sm">
-            <p><strong>Author:</strong> ${issue.author}</p>
-            <p><strong>Priority:</strong> ${issue.priority}</p>
-            <p><strong>ID:</strong> #${issue.id}</p>
-            <p><strong>Created:</strong> ${new Date(issue.createdAt).toLocaleString()}</p>
+            <p>Author: </p>
+            <p>Priority:</p>
+            <p class="text-xl"><strong>${issue.author}</strong></p>
+            <p ><strong class="${priorityBadge} text-white font-semibold text-md px-4 py-1 rounded-full">${issue.priority}</strong></p>
           </div>
 
           <div>
@@ -91,7 +105,7 @@ async function showDetails(id) {
 
         <div class="modal-action">
           <form method="dialog">
-            <button class="btn btn-neutral px-8">Close</button>
+            <button class=" btn border border-blue-600 bg-blue-600 text-white text-lg px-8">Close</button>
           </form>
         </div>
       </div>
