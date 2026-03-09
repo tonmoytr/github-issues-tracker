@@ -18,7 +18,7 @@ function setActiveTab(activeKey) {
 
 tabBtns.all.addEventListener("click", () => {
   setActiveTab("all");
-  renderIssues(allIssues);
+  renderIssues(allIssues); // requirement: show all data by default
 });
 
 tabBtns.open.addEventListener("click", () => {
