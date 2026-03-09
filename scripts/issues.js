@@ -46,7 +46,6 @@ function renderIssues(issues) {
 }
 
 async function showDetails(id) {
-  // 1. Fetch the single issue data
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
   const res = await fetch(url);
   const data = await res.json();
@@ -58,8 +57,6 @@ async function showDetails(id) {
       : issue.priority === "medium"
         ? "bg-yellow-300"
         : "bg-green-400";
-
-  // 2. Create the modal container if it doesn't exist in the HTML
   let modalContainer = document.getElementById("modal-container");
   if (!modalContainer) {
     modalContainer = document.createElement("div");
@@ -67,7 +64,6 @@ async function showDetails(id) {
     document.body.appendChild(modalContainer);
   }
 
-  // 3. Inject the DaisyUI modal structure
   modalContainer.innerHTML = `
     <dialog id="issue_details_modal" class="modal modal-bottom sm:modal-middle">
       <div class="modal-box max-w-2xl border-t-8 ${issue.status === "open" ? "border-green-600" : "border-purple-600"}">
@@ -88,19 +84,14 @@ async function showDetails(id) {
         <div class="space-y-4">
           <p class="text-gray-700 leading-relaxed"><span class="font-bold text-black">Description:</span> ${issue.description}</p>
           
-          <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-lg text-sm">
+          <div class="grid grid-cols-2 gap-4 bg-slate-100 p-4 rounded-lg text-sm">
             <p>Author: </p>
             <p>Priority:</p>
             <p class="text-xl"><strong>${issue.author}</strong></p>
             <p ><strong class="${priorityBadge} text-white font-semibold text-md px-4 py-1 rounded-full">${issue.priority}</strong></p>
           </div>
 
-          <div>
-             <p class="font-bold mb-2">Labels:</p>
-             <div class="flex gap-2">
-                ${issue.labels.map((label) => `<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs">${label}</span>`).join("")}
-             </div>
-          </div>
+          
         </div>
 
         <div class="modal-action">
@@ -111,26 +102,19 @@ async function showDetails(id) {
       </div>
     </dialog>
   `;
-
-  // 4. Open the modal
   document.getElementById("issue_details_modal").showModal();
 }
 
-// Search Implementation
 searchBtn.addEventListener("click", async () => {
   const query = searchInput.value.trim().toLowerCase();
 
-  // 1. Construct the search URL
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${query}`;
 
-  // 2. Fetch the data
   const res = await fetch(url);
   const data = await res.json();
 
-  // 3. Update the global variable
   allIssues = data.data;
 
-  // 4. CRITICAL: You must call render to update the UI!
   renderIssues(allIssues);
 });
 
